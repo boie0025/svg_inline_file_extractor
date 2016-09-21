@@ -5,13 +5,8 @@ module SvgInlineFileExtractor
   class SvgFile
 
     class << self
-      def from_path(path)
-        string = File.read(path)
-        new(string)
-      end
-
-      def from_string(string)
-        new(string)
+      def binary_images(string)
+        new(string).binary_images
       end
 
       def strip_header_from(string)

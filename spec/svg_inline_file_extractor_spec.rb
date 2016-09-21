@@ -5,11 +5,11 @@ describe SvgInlineFileExtractor do
     expect(SvgInlineFileExtractor::VERSION).not_to be nil
   end
 
-  let(:path) { File.expand_path('../fixtures/ruby-logo.svg', __FILE__) }
+  let(:svg) { File.read(File.expand_path('../fixtures/ruby-logo.svg', __FILE__)) }
 
   describe '.binary_images' do
     context 'svg file with two inline PNG images' do
-      subject { described_class.binary_images(path: path) }
+      subject { described_class.binary_images(svg) }
       it { is_expected.to be_an Array }
       it 'returns an array of decoded binary PNGs' do
         expect(subject)
