@@ -1,4 +1,4 @@
-# SvgInlineFileExtractor
+# Svg Inline File Extractor
 [![Build Status](https://travis-ci.org/boie0025/svg_inline_file_extractor.svg?branch=master)](https://travis-ci.org/boie0025/svg_inline_file_extractor)
 [![Test Coverage](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/coverage.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/coverage)
 [![Code Climate](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/gpa.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor)
@@ -20,7 +20,7 @@ This is a work in progress.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'svg_inline_file_extractor'
+gem 'svg-inline-file-extractor'
 ```
 
 And then execute:
@@ -29,7 +29,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install svg_inline_file_extractor
+    $ gem install svg-inline-file-extractor
 
 ## Usage
 
