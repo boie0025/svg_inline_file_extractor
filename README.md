@@ -1,4 +1,8 @@
 # SvgInlineFileExtractor
+[![Build Status](https://travis-ci.org/boie0025/svg_inline_file_extractor.svg?branch=master)](https://travis-ci.org/boie0025/svg_inline_file_extractor)
+[![Test Coverage](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/coverage.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/coverage)
+[![Code Climate](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/gpa.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor)
+
 
 The purpose of this gem is to extract inline SVG base64 encoded PNG images. This is based in part from ideas in https://gist.github.com/r10r/2822884
 
