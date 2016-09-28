@@ -43,7 +43,7 @@ module SvgInlineFileExtractor
     # @return [ String | Nil ] the value in the specified attribute, or nil if not set
     def get_attribute(attribute)
       attribute = nokogiri_element.parent.attribute(attribute)
-      attribute&.value
+      attribute.value if attribute
     end
 
     # Updates the contents of the href that this inline image came from

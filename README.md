@@ -18,6 +18,8 @@ using, as the interface is subject to wild change in this early phase of develop
 
 ## Installation
 
+This gem is tested against Ruby 2.2.0 and 2.3.0
+
 Add this line to your application's Gemfile:
 
 ```ruby
