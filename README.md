@@ -6,13 +6,14 @@
 
 The purpose of this gem is to extract inline SVG base64 encoded PNG images. This is based in part from ideas in https://gist.github.com/r10r/2822884
 
-This is a work in progress.
+This is a work in progress.  You should specify a specific version of this gem when
+using, as the interface is subject to wild change in this early phase of development.
 
 ## Roadmap
 
-* Add ability to replace an inline image with a URI after extraction
-* Extract svg_file image handling to a separate class
-* Work with more than just PNG files
+* ~~Add ability to replace an inline image with a URI after extraction~~ Done
+* ~~Extract svg_file image handling to a separate class~~ Done
+* ~~Work with more than just PNG files~~ Done
 * Query images for their type, possibly other meta
 
 ## Installation
@@ -33,21 +34,27 @@ Or install it yourself as:
 
 ## Usage
 
+### Example
+
+from `bin/console`
+
 ```ruby
 require 'svg_inline_file_extractor'
 
 # open a file
 # set path to an SVG file (example file in the gem under spec/fixtures)
-# path = <PATH TO SOME SVG FILE WITH INLINE IMAGES>
-files = SvgInlineFileExtractor.binary_images(path: path)
+# file = File.read(<PATH TO SOME SVG FILE WITH INLINE IMAGES>)
+files = SvgInlineFileExtractor.binary_images(file)
 
-# Write FIRST image to a tempfile
-tf = Tempfile.new(['file','.png'])
-tf.write(files.first)
-tf.close
+# Open all the extracted files:
+files.each do |file|
+  tf = Tempfile.new(['file','.png'])
+  tf.write(file)
+  tf.close
 
-#open the file
-`open #{tf.path}`
+  #open the file with system open
+  `open #{tf.path}`
+end
 
 ```
 

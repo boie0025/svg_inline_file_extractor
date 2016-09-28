@@ -12,7 +12,17 @@ describe SvgInlineFileExtractor do
       subject { described_class.binary_images(svg) }
       it { is_expected.to be_an Array }
       it 'returns an array of decoded binary PNGs' do
-        expect(subject)
+        expect(subject).to include(String, String)
+      end
+    end
+  end
+
+  describe '.inline_images' do
+    context 'svg file with two inline PNG images' do
+      subject { described_class.inline_images(svg) }
+      it { is_expected.to be_an Array }
+      it 'returns an array of InlineImage objects' do
+        expect(subject).to include(SvgInlineFileExtractor::InlineImage, SvgInlineFileExtractor::InlineImage)
       end
     end
   end
