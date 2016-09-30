@@ -2,7 +2,6 @@ require 'base64'
 
 module SvgInlineFileExtractor
   class InlineImage
-    class UnableToDetermineImageTypeError < StandardError; end
 
     # Regex pattern to match against the beginning of the href string.  the type, if found, will be the raw string, eg: jpeg, jpg, png, etc.
     DATA_IMAGE_HEADER_PATTERN = /data:image\/(?<type>.+);base64\,/.freeze
