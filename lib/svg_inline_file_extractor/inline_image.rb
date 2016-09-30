@@ -17,8 +17,7 @@ module SvgInlineFileExtractor
       self.href_contents = nokogiri_element.value
     end
 
-    # @return [ String ] The image type according to the DATA_IMAGE_HEADER_PATTERN
-    # @raise [ UnableToDetermineImageTypeError ] will raise if regex doesn't match.
+    # @return [ String|Nil ] The image type according to the DATA_IMAGE_HEADER_PATTERN, nil if pattern not matched.
     def declared_image_type
       @declared_image_type ||= begin
         if (match = href_contents.match(DATA_IMAGE_HEADER_PATTERN))
@@ -27,6 +26,7 @@ module SvgInlineFileExtractor
       end
     end
 
+    # @return [ Boolean ] true if declared_image_type is not nil
     def inline_image?
       !!declared_image_type
     end

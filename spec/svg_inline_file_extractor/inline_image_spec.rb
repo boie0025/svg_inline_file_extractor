@@ -33,6 +33,22 @@ module SvgInlineFileExtractor
       end
     end
 
+    describe '#inline_image?' do
+      let(:nokogiri_element) { double(:nokogiri_element, value: href_contents) }
+      subject { described_class.new(nokogiri_element) }
+
+      context 'href contents match the header pattern' do
+        let(:href_contents) { "data:image/zebra;base64,..." }
+        it { is_expected.to be_inline_image }
+      end
+
+      context 'href contents do not match header pattern' do
+        let(:href_contents) { "http://www.example.com/image.png" }
+        it { is_expected.to_not be_inline_image }
+      end
+
+    end
+
     context 'with svg file' do
       let(:svg) { File.read(File.expand_path('../../fixtures/ruby-logo.svg', __FILE__)) }
       let(:nokogiri) { Nokogiri::XML(svg).remove_namespaces! }
