@@ -23,10 +23,12 @@ module SvgInlineFileExtractor
       @declared_image_type ||= begin
         if (match = href_contents.match(DATA_IMAGE_HEADER_PATTERN))
           match[:type]
-        else
-          raise UnableToDetermineImageTypeError, "Unable to match header to #{DATA_IMAGE_HEADER_PATTERN}"
         end
       end
+    end
+
+    def inline_image?
+      !!declared_image_type
     end
 
     # @return [ String | nil ] the value of the id attribute in the parent element

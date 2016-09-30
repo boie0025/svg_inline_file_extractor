@@ -28,10 +28,8 @@ module SvgInlineFileExtractor
       end
 
       context 'NON Image' do
-        let(:href_contents) { "data:foobar/barfoo;base64,..." }
-        it 'raises UnableToDetermineImageTypeError' do
-          expect{ subject }.to raise_error(InlineImage::UnableToDetermineImageTypeError)
-        end
+        let(:href_contents) { "http://www.example.com/image.png" }
+        it { is_expected.to be_nil }
       end
     end
 

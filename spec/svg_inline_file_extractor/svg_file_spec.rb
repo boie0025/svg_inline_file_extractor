@@ -25,6 +25,7 @@ module SvgInlineFileExtractor
       subject { described_class.inline_images(svg) }
       it { is_expected.to be_an(Array) }
       it { is_expected.to include(InlineImage, InlineImage) }
+      specify { expect(subject.count).to eq 2 }
 
       it 'extracts the triangle png' do
         expect(subject.first.binary_image).to eq ruby_triangle
@@ -32,6 +33,14 @@ module SvgInlineFileExtractor
 
       it 'extracts the circle png' do
         expect(subject.last.binary_image).to eq ruby_circle
+      end
+
+      context 'one url image and one inline image' do
+        let(:svg) { File.read(File.expand_path('../../fixtures/ruby-logo-with-uri-image.svg', __FILE__)) }
+        it { is_expected.to be_an(Array) }
+        it { is_expected.to include(InlineImage) }
+        specify { expect(subject.count).to eq 1 }
+        specify { expect(subject.first.element_id).to eq 'image3549' }
       end
     end
 

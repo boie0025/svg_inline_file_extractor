@@ -41,8 +41,10 @@ module SvgInlineFileExtractor
     # @see InlineImage
     def inline_images
       image_elements.map do |element|
-        InlineImage.new(element)
-      end
+        if (image = InlineImage.new(element)).inline_image?
+          image
+        end
+      end.compact
     end
 
     private
