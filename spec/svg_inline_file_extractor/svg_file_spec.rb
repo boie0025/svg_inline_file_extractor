@@ -44,6 +44,16 @@ module SvgInlineFileExtractor
       end
     end
 
+    describe '#rendered_svg' do
+      subject { described_class.new('') }
+      before do
+        allow(subject).to receive(:nokogiri_document).and_return("foobar&#10;")
+      end
+      it 'replaces the &#10; entity with a newline' do
+        expect(subject.rendered_svg).to eq("foobar\n")
+      end
+    end
+
 
   end
 end

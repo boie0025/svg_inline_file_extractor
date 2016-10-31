@@ -37,14 +37,23 @@ module SvgInlineFileExtractor
       end
     end
 
+    # @param [ Boolean ] false returns only inline base64 encoded images, true returns all image tags
     # @return [ Array<InlineImage> ] an array of the inline images found in the document
     # @see InlineImage
-    def inline_images
+    def inline_images(all = false)
       image_elements.map do |element|
-        if (image = InlineImage.new(element)).inline_image?
+        image = InlineImage.new(element)
+        if all || image.inline_image?
           image
         end
       end.compact
+    end
+
+    # @return the rendered nokogiri_document.
+    # @note text "&#10;" will be replaced with newlines to allow newlines in Base64
+    #   encoded strings.
+    def rendered_svg
+      nokogiri_document.to_s.gsub('&#10;', "\n")
     end
 
     private

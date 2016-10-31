@@ -1,4 +1,5 @@
 require 'base64'
+require 'open-uri'
 
 module SvgInlineFileExtractor
   class InlineImage
@@ -47,9 +48,11 @@ module SvgInlineFileExtractor
       attribute.value if attribute
     end
 
-    # Updates the contents of the href that this inline image came from
+    # Updates the contents of the href that this inline image came from,
+    #  and #href_contents
     # @param [ String ] value the value to set the href contents to
-    def svg_href_contents=(value)
+    def href_contents=(value)
+      @href_contents = value
       nokogiri_element.value = value
     end
 
@@ -59,7 +62,27 @@ module SvgInlineFileExtractor
       @binary_image ||= Base64.decode64(without_header)
     end
 
+    # If the image href is set to a URI, attempt to download/open and convert to an
+    #  base64 encoded inline image
+    # @return [ Boolean ] true
+    # @raise [ SvgInlineFileExtractor::MiniMagickMissing ] if MiniMagick is not installed/required.
+    def set_binary_image_from_uri!
+      unless SvgInlineFileExtractor.use_mini_magick?
+        raise MiniMagickMissing, '#set_binary_image_from_uri! requires the MiniMagick gem to be installed.'
+      end
+      SvgInlineFileExtractor.with_temp_image(nokogiri_element.value) do |temp_image|
+        format = SvgInlineFileExtractor.identify_image(temp_image).to_s.downcase
+        nokogiri_element.value = "data:image/#{format};base64,#{encode(temp_image)}"
+        nokogiri_element.name = 'xlink:href'
+      end
+      true
+    end
+
     private
+
+    def encode(image_path)
+      Base64.encode64(File.open(image_path.to_s).binmode.read)
+    end
 
     def without_header
       @without_header ||= href_contents.gsub(DATA_IMAGE_HEADER_PATTERN, '')
