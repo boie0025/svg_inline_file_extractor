@@ -4,7 +4,7 @@ module SvgInlineFileExtractor
 
   describe InlineImage do
     describe '#declared_image_type' do
-      let(:nokogiri_element) { double(:nokogiri_element, value: href_contents, "value=": nil) }
+      let(:nokogiri_element) { double(:nokogiri_element, value: href_contents, "value=" => nil) }
       subject { described_class.new(nokogiri_element).declared_image_type }
 
       context 'jpeg' do
@@ -34,7 +34,7 @@ module SvgInlineFileExtractor
     end
 
     describe '#inline_image?' do
-      let(:nokogiri_element) { double(:nokogiri_element, value: href_contents, "value=": nil) }
+      let(:nokogiri_element) { double(:nokogiri_element, value: href_contents, "value=" => nil) }
       subject { described_class.new(nokogiri_element) }
 
       context 'href contents match the header pattern' do
