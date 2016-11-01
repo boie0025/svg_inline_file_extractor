@@ -31,7 +31,7 @@ describe SvgInlineFileExtractor do
     let(:ruby_circle) { File.expand_path('../fixtures/ruby-circle.png', __FILE__) }
     let(:minimagick_image) { double(:minimagick_image) }
     before do
-      minimagick_image.stub_chain(:open, :type, :downcase).and_return('png')
+      allow(minimagick_image).to receive_message_chain(:open, :type, :downcase).and_return('png')
       MiniMagick = Module.new
       MiniMagick::Image = minimagick_image
       #allow(subject).to receive(:use_mini_magick?).and_return true

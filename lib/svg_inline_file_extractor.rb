@@ -35,9 +35,9 @@ module SvgInlineFileExtractor
   end
 
   # do something with a temporary copy of uri in a block.
-  # @param [ String ] uri - the location of the file to open into a temp file. 
+  # @param [ String ] uri - the location of the file to open into a temp file.
   def self.with_temp_image(uri)
-    temp = Tempfile.new
+    temp = Tempfile.new('inline_image')
     temp.binmode
     puts "opening #{uri}"
     temp.write open(uri).binmode.read
