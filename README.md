@@ -18,7 +18,7 @@ using, as the interface is subject to wild change in this early phase of develop
 
 ## Installation
 
-This gem is tested against Ruby 2.2.0 and 2.3.0
+This gem is tested against Ruby 2.3.x, 2.2.x and 2.1.x
 
 Add this line to your application's Gemfile:
 
