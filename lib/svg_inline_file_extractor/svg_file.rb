@@ -31,7 +31,7 @@ module SvgInlineFileExtractor
     # @return [ Nokogiri::XML ] a nokogiri XML document wrapper
     def nokogiri_document
       @nokogiri_document ||= begin
-        doc = Nokogiri::XML(xml_string)
+        doc = Nokogiri::XML(xml_string, nil, nil, Nokogiri::XML::ParseOptions::HUGE)
         doc.remove_namespaces!
         doc
       end

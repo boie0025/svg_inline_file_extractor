@@ -73,7 +73,7 @@ module SvgInlineFileExtractor
       SvgInlineFileExtractor.with_temp_image(nokogiri_element.value) do |temp_image|
         format = SvgInlineFileExtractor.identify_image(temp_image).to_s.downcase
         nokogiri_element.value = "data:image/#{format};base64,#{encode(temp_image)}"
-        nokogiri_element.name = 'xlink:href'
+        nokogiri_element.name = 'href'
       end
       true
     end

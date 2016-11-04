@@ -104,9 +104,7 @@ module SvgInlineFileExtractor
 
           it 'sets the name of the attribute to xlink:href' do
             expect{ subject.set_binary_image_from_uri! }
-              .to change{ subject.nokogiri_element.name }
-              .from('href')
-              .to('xlink:href')
+              .to_not change{ subject.nokogiri_element.name }
           end
         end
 
