@@ -32,7 +32,6 @@ module SvgInlineFileExtractor
     def nokogiri_document
       @nokogiri_document ||= begin
         doc = Nokogiri::XML(xml_string, nil, nil, Nokogiri::XML::ParseOptions::HUGE)
-        doc.remove_namespaces!
         doc
       end
     end
@@ -59,7 +58,7 @@ module SvgInlineFileExtractor
     private
 
     def image_elements
-      @image_elements ||= nokogiri_document.xpath("//image/@href")
+      @image_elements ||= nokogiri_document.xpath("//svg:image/@xlink:href", 'svg' => 'http://www.w3.org/2000/svg', 'xlink' => 'http://www.w3.org/1999/xlink')
     end
 
   end

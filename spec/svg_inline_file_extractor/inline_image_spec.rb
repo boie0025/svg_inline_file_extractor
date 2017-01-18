@@ -51,8 +51,8 @@ module SvgInlineFileExtractor
 
     context 'with svg file' do
       let(:svg) { File.read(File.expand_path('../../fixtures/ruby-logo.svg', __FILE__)) }
-      let(:nokogiri) { Nokogiri::XML(svg).remove_namespaces! }
-      let(:nokogiri_element) { nokogiri.xpath("//image/@href").first }
+      let(:nokogiri) { Nokogiri::XML(svg) }
+      let(:nokogiri_element) { nokogiri.xpath("//svg:image/@xlink:href").first }
       subject { described_class.new(nokogiri_element) }
 
       describe '#element_id' do
@@ -73,7 +73,7 @@ module SvgInlineFileExtractor
       describe '#href_contents=' do
         it 'sets the contents of the href' do
           subject.href_contents = 'http://example.com/image.png'
-          expect(nokogiri.xpath("//image/@href").first.value).to eq 'http://example.com/image.png'
+          expect(nokogiri.xpath("//svg:image/@xlink:href").first.value).to eq 'http://example.com/image.png'
         end
       end
 
