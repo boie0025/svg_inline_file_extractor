@@ -9,6 +9,8 @@ The purpose of this gem is to extract inline SVG base64 encoded PNG images. This
 This is a work in progress.  You should specify a specific version of this gem when
 using, as the interface is subject to wild change in this early phase of development.
 
+See the [SVG Inline Image Extraction and Replacement With Ruby](https://www.webvolta.com/blog/svg-inline-image-extraction-and-replacement-with-ruby) blog post for more details.
+
 ## Roadmap
 
 * ~~Add ability to replace an inline image with a URI after extraction~~ Done
