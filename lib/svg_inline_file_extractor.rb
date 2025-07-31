@@ -40,7 +40,7 @@ module SvgInlineFileExtractor
     temp = Tempfile.new('inline_image')
     temp.binmode
     puts "opening #{uri}"
-    temp.write open(uri).binmode.read
+    temp.write URI.open(uri).binmode.read
     temp.close
     results = yield temp.path
     temp.delete
