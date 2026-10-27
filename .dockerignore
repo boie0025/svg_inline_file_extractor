@@ -1,0 +1,7 @@
+.git
+.claude
+coverage
+pkg
+Gemfile.lock
+*.swp
+.DS_Store

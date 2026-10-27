@@ -1,5 +1,5 @@
 # Svg Inline File Extractor
-[![Build Status](https://travis-ci.org/boie0025/svg_inline_file_extractor.svg?branch=master)](https://travis-ci.org/boie0025/svg_inline_file_extractor)
+[![CI](https://github.com/boie0025/svg_inline_file_extractor/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/boie0025/svg_inline_file_extractor/actions/workflows/ci.yml)
 [![Test Coverage](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/coverage.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/coverage)
 [![Code Climate](https://codeclimate.com/github/boie0025/svg_inline_file_extractor/badges/gpa.svg)](https://codeclimate.com/github/boie0025/svg_inline_file_extractor)
 
@@ -20,7 +20,7 @@ See the [SVG Inline Image Extraction and Replacement With Ruby](https://www.webv
 
 ## Installation
 
-This gem is tested against Ruby 2.3.x, 2.2.x and 2.1.x
+This gem is tested against Ruby 2.7 through 3.4.
 
 Add this line to your application's Gemfile:
 
@@ -65,6 +65,12 @@ end
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To run the tests in Docker instead:
+
+    $ docker compose run --rm test
+
+Set `DOCKER_RUBY_VERSION` to test against another Ruby, for example `DOCKER_RUBY_VERSION=3.4 docker compose run --rm --build test`.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
