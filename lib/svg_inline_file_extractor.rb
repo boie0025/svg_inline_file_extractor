@@ -1,3 +1,5 @@
+require "open-uri"
+require "tempfile"
 require "svg_inline_file_extractor/version"
 require "svg_inline_file_extractor/svg_file"
 require "svg_inline_file_extractor/inline_image"

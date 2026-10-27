@@ -9,6 +9,38 @@ module SvgInlineFileExtractor
     describe '#nokogiri_document' do
       subject { described_class.new(svg).nokogiri_document }
       it { is_expected.to be_a Nokogiri::XML::Document }
+
+      context 'with a bare ampersand in text' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text>Smith & Jones</text></svg>) }
+
+        specify { expect(subject.at_xpath('//*[local-name()="text"]').text).to eq 'Smith & Jones' }
+      end
+
+      context 'with a bare ampersand in an attribute' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><a href="https://example.com/?a=1&b=2"/></svg>) }
+
+        specify { expect(subject.at_xpath('//*[local-name()="a"]')['href']).to eq 'https://example.com/?a=1&b=2' }
+      end
+
+      context 'with entity and character references' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text>&amp; &lt; &#38; &#x26;</text></svg>) }
+
+        specify { expect(subject.at_xpath('//*[local-name()="text"]').text).to eq '& < & &' }
+      end
+
+      context 'with an ampersand inside CDATA' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><style><![CDATA[a & b]]></style></svg>) }
+
+        specify { expect(subject.at_xpath('//*[local-name()="style"]').text).to eq 'a & b' }
+      end
+
+      context 'with malformed markup' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text><tspan>a</text></tspan></svg>) }
+
+        it 'parses and records the errors instead of raising' do
+          expect(subject.errors).to_not be_empty
+        end
+      end
     end
 
     describe '#binary_images' do
