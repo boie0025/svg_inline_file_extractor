@@ -28,15 +28,11 @@ module SvgInlineFileExtractor
       inline_images.map(&:binary_image)
     end
 
-    # Matches a bare & that does not start an entity or character reference. CDATA sections and
-    # comments are captured so the & they may legally contain is left alone.
-    BARE_AMPERSAND = /(<!\[CDATA\[.*?\]\]>|<!--.*?-->)|&(?![A-Za-z_][\w.-]*;|#\d+;|#x\h+;)/m
-
     # @return [ Nokogiri::XML ] a nokogiri XML document wrapper
-    # @note bare ampersands are escaped before parsing so they are kept as text rather than dropped.
+    # @note malformed markup is recovered rather than raised; check +errors+ on the document.
     def nokogiri_document
       @nokogiri_document ||= Nokogiri::XML(
-        escape_bare_ampersands(xml_string),
+        xml_string,
         nil,
         nil,
         Nokogiri::XML::ParseOptions::DEFAULT_XML | Nokogiri::XML::ParseOptions::HUGE
@@ -63,10 +59,6 @@ module SvgInlineFileExtractor
     end
 
     private
-
-    def escape_bare_ampersands(xml)
-      xml.gsub(BARE_AMPERSAND) { $1 || '&amp;' }
-    end
 
     def image_elements
       @image_elements ||= nokogiri_document.xpath("//svg:image/@xlink:href", 'svg' => 'http://www.w3.org/2000/svg', 'xlink' => 'http://www.w3.org/1999/xlink')

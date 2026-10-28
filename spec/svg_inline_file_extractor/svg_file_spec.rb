@@ -10,28 +10,12 @@ module SvgInlineFileExtractor
       subject { described_class.new(svg).nokogiri_document }
       it { is_expected.to be_a Nokogiri::XML::Document }
 
-      context 'with a bare ampersand in text' do
+      context 'with a bare ampersand' do
         let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text>Smith & Jones</text></svg>) }
 
-        specify { expect(subject.at_xpath('//*[local-name()="text"]').text).to eq 'Smith & Jones' }
-      end
-
-      context 'with a bare ampersand in an attribute' do
-        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><a href="https://example.com/?a=1&b=2"/></svg>) }
-
-        specify { expect(subject.at_xpath('//*[local-name()="a"]')['href']).to eq 'https://example.com/?a=1&b=2' }
-      end
-
-      context 'with entity and character references' do
-        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text>&amp; &lt; &#38; &#x26;</text></svg>) }
-
-        specify { expect(subject.at_xpath('//*[local-name()="text"]').text).to eq '& < & &' }
-      end
-
-      context 'with an ampersand inside CDATA' do
-        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><style><![CDATA[a & b]]></style></svg>) }
-
-        specify { expect(subject.at_xpath('//*[local-name()="style"]').text).to eq 'a & b' }
+        it 'parses and records the error instead of raising' do
+          expect(subject.errors.map(&:message)).to include(a_string_including('xmlParseEntityRef'))
+        end
       end
 
       context 'with malformed markup' do
