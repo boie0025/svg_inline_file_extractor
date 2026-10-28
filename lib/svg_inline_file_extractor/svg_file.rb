@@ -29,11 +29,14 @@ module SvgInlineFileExtractor
     end
 
     # @return [ Nokogiri::XML ] a nokogiri XML document wrapper
+    # @note malformed markup is recovered rather than raised; check +errors+ on the document.
     def nokogiri_document
-      @nokogiri_document ||= begin
-        doc = Nokogiri::XML(xml_string, nil, nil, Nokogiri::XML::ParseOptions::HUGE)
-        doc
-      end
+      @nokogiri_document ||= Nokogiri::XML(
+        xml_string,
+        nil,
+        nil,
+        Nokogiri::XML::ParseOptions::DEFAULT_XML | Nokogiri::XML::ParseOptions::HUGE
+      )
     end
 
     # @param [ Boolean ] false returns only inline base64 encoded images, true returns all image tags

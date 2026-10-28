@@ -9,6 +9,22 @@ module SvgInlineFileExtractor
     describe '#nokogiri_document' do
       subject { described_class.new(svg).nokogiri_document }
       it { is_expected.to be_a Nokogiri::XML::Document }
+
+      context 'with a bare ampersand' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text>Smith & Jones</text></svg>) }
+
+        it 'parses and records the error instead of raising' do
+          expect(subject.errors.map(&:message)).to include(a_string_including('xmlParseEntityRef'))
+        end
+      end
+
+      context 'with malformed markup' do
+        let(:svg) { %(<svg xmlns="http://www.w3.org/2000/svg"><text><tspan>a</text></tspan></svg>) }
+
+        it 'parses and records the errors instead of raising' do
+          expect(subject.errors).to_not be_empty
+        end
+      end
     end
 
     describe '#binary_images' do
