@@ -1,0 +1,9 @@
+services:
+  test:
+    build:
+      context: .
+      args:
+        RUBY_VERSION: ${DOCKER_RUBY_VERSION:-3.3}
+    volumes:
+      - ./lib:/app/lib
+      - ./spec:/app/spec
